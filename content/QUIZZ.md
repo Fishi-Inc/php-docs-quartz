@@ -93,7 +93,7 @@ Die HTML-Struktur: *(was das echo ausgeben wird)*
 ```
 
 Da wir aber nicht nur eine Zeile ausgeben wollen, sondern so viele wie es gibt, müssen wir eine `while`-Schleife einfügen. Solang noch eine `$zeile` existiert, wird diese Schleife fortgesetzt.
-Pro Durchlauf fügen wir neues [[html-elemete#`<tr>` Element|<tr>]] Element ein (Neue Zeile), welches weitere [[html-elemete#`<td>` Element|<td>]] Element enthält, welche wiederum die jeweiligen Informationen des Datensatzes beinhalten.
+Pro Durchlauf fügen wir neues [[html-elemete#tr Element|<tr>]] Element ein (Neue Zeile), welches weitere [[html-elemete#td Element|<td>]] Element enthält, welche wiederum die jeweiligen Informationen des Datensatzes beinhalten.
 ![[20230915233056.png]]
 
 ## INSERT INTO, UPDATE, DELETE
@@ -142,8 +142,4 @@ echo "
 ?>
 ```
 
-Wir nutzen hier ein [[html-elemete#`<form>` Element|<form>]] Element
-
-
-Test
-[[html-elemete#test]]
+Wir nutzen hier ein [[html-elemete#form Element|<form>]] Element
