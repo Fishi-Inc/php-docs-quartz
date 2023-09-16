@@ -154,14 +154,14 @@ Die Methode `post` sorgt dafür, dass wir nach Abschicken des Formulars die eing
 Die `<input>` Elemente nutzen wir, um ein Eingabefeld zu erstellen. Um genau zu definieren welchen Wert wir in das jeweilige Eingabefeld eingeben, legen wir die Eigenschaften des Elementes fest. Als Beispiel `<input name='einwohnerzahl' type='text'` hierbei steht das Eingabefeld für die Einwohnerzahl und soll Text enthalten.
 Der Submit-Button sorgt für das Abschicken des Formulars: `<input type='submit' name='speichern' value='Speichern'>`
 
-Um die eingegebenen Daten nun in php zu verarbeiten nutzen wir eine neue Funktion der Programmiersprache: [[QUIZZ#$ _POST und $ _GET|$_POST]]
+Um die eingegebenen Daten nun in php zu verarbeiten nutzen wir eine neue Funktion der Programmiersprache: `$_`[[QUIZZ#POST und GET|POST]]
 `if(isset($_POST['speichern']))` prüft, ob die "Variable" `$_POST` einen Wert besitzt. Falls ja, dann soll eine neue SQL-Anfrage erstellt werden: `"INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('".$_POST['stadtname']."', '".$_POST['einwohnerzahl']."');"`
 Untersuchen wir die Anfrage etwas genauer: `INSERT INTO` deutet darauf hin, dass wir Daten in die Datenbank schreiben wollen. Nun kommt eine Neue Komponente bei den `VALUES` ins Spiel, die Variablen. Da der SQL Befehl so aussehen soll: `INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('Chemnitz', '247000')` müssen wir etwas tricksen.
 
--> String 1= `INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('"` danach kommt die Variable `.$_POST['stadtname'].`, darauf folgt der String `"', '"`, die Variable `.$_POST['einwohnerzahl'].` und zum Schluss der String `"');"`.
+Das "String"-Konstrukt sieht so aus: `"INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('"` danach kommt die Variable `.$_POST['stadtname'].`, darauf folgt der String `"', '"`, die Variable `.$_POST['einwohnerzahl'].` und zum Schluss der String `"');"`.
 Also zusammengefasst:
-`"INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('"` `.$_POST['stadtname'].` `"', '"` `.$_POST['einwohnerzahl'].` `"');"`
+`"INSERT INTO stadt (stadtname, einwohnerzahl) VALUES('"` + `.$_POST['stadtname'].` + `"', '"` + `.$_POST['einwohnerzahl'].` + `"');"`
 
-Die Punkte vor und nach den Variablen (`.$_POST['stadtname'].`) sorgen dafür, dass die Strings (und die Variablen) verbunden werden.
+Die Punkte vor und nach den Variablen (`.$_POST['stadtname'].`) sorgen dafür, dass die Strings (und die Variablen) verbunden werden. 
 
-## $\_POST und $\_GET
+### POST und GET
