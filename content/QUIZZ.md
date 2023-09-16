@@ -36,13 +36,13 @@ Wenn wir die Verbindung wieder schließen wollen, rufen wir die Funktion `mysqli
 ```php
 //SELECT FROM
 $datensatz = mysqli_query($connection,"SELECT stadtname FROM stadt WHERE
-			stadt_id='1';");
+				stadt_id='1';");
 $zeile = mysqli_fetch_array($datensatz);
 echo $zeile[0];
 ```
 
 Um Daten aus unsere Datenbank abzurufen nutzten wir die Funktion `mysqli_query()` (eng. query = Abfrage). Die Ausgabe dieser Abfrage speichern wir in der Variable `$datensatz`.
-Wir geben der Funktion unsere Datenbank-Verbindung (`$connection`) mit, sowie den SQL Befehl, welchen wir ausführen wollen.
+Wir geben der Funktion unsere Datenbank-Verbindung (`$connection`) mit, sowie den SQL Befehl, welchen wir ausführen wollen. (getrennt durch Komma)
 Um Daten aus eine Datenbank abzurufen nutzten wir `SELECT (Spalte) FROM (Tabelle)`.
 Falls wir alle Spalten einer Tabelle abrufen wollen nutzen wir `SELECT * FROM (Tabelle)`.
 Mit `WHERE stadt_id='1'` rufen wir nur die Daten ab, bei denen die stadt_id 1 beträgt
@@ -94,6 +94,7 @@ Die HTML-Struktur: *(was das echo ausgeben wird)*
 
 Da wir aber nicht nur eine Zeile ausgeben wollen, sondern so viele wie es gibt, müssen wir eine `while`-Schleife einfügen. Solang noch eine `$zeile` existiert, wird diese Schleife fortgesetzt.
 Pro Durchlauf fügen wir neues <[[html-elemete#tr Element|tr]]> Element ein (Neue Zeile), welches weitere <[[html-elemete#td Element|td]]> Element enthält, welche wiederum die jeweiligen Informationen des Datensatzes beinhalten.
+
 ![[20230915233056.png]]
 
 ## INSERT INTO, UPDATE, DELETE
@@ -101,7 +102,7 @@ Pro Durchlauf fügen wir neues <[[html-elemete#tr Element|tr]]> Element ein (Neu
 Nachdem wir unsere [[QUIZZ#Datenbank verbinden|Datenbank verbunden]] haben, können wir eine SQL-Anfrage machen.
 ```php
 $datensatz=mysqli_query($connection,"INSERT INTO stadt (stadtname, einwohnerzahl)
-									  VALUES('Freiberg', '39700');");
+					VALUES('Freiberg', '39700');");
 ```
 
 `INSERT INTO (Tabellen) VALUES (Werte)` sorgt für das Hinzufügen der eingegebenen Daten in die Datenbank. Wir wählen die Tabelle `stadt` und geben zusätzlich die Spalten an, zu denen wir Informationen hinzufügen (`stadtname, einwohnerzahl`). Als nächstes geben wir die Daten an `VALUES('Freiberg', '39700')`. 
@@ -116,12 +117,20 @@ $db_connect = new mysqli($db_host,$db_user,$db_password,$db_name);
 
 if(isset($_POST['speichern'])) {
 	//INSERT INTO
-	$datensatz=@mysqli_query($db_connect,"INSERT INTO stadt (stadtname, einwohnerzahl)
+	$datensatz=mysqli_query($db_connect,"INSERT INTO stadt (stadtname, einwohnerzahl)
 		VALUES('".$_POST['stadtname']."', '".$_POST['einwohnerzahl']."');");
 }
 
-//Eingabeformular
-echo "
+//DB trennen
+mysqli_close($db_connect);
+?>
+
+
+
+<-- Eingabeformular -->
+<html>
+<body>
+
 <form name='form0' action='' method='post' enctype='multipart/form-data' autocomplete='off'>
 <table border='0' cellpadding='5' cellspacing='0'>
 	<tr>
@@ -135,11 +144,16 @@ echo "
 </table>
 <input style='margin-top: 15px;' type='submit' name='speichern' value='Speichern'>
 </form>
-";
 
-//DB trennen
-@mysqli_close($db_connect);
-?>
+</body>
+</html>
 ```
 
-Wir nutzen hier ein <[[html-elemete#form Element|form]]> Element
+Wir nutzen hier ein <[[html-elemete#form Element|form]]> Element innerhalb eines <[[html-elemete#body Element|body]]>.  *Notiz: wir nutzen hier einfach HTML code, da wir keine Variablen mitgeben müssen (also brauchen wir echo "..." nicht)*
+Die Methode `post` sorgt dafür, dass wir nach Abschicken des Formulars die eingegebenen Werte weiterverarbeiten können. Dazu gleich mehr.
+Die `<input>` Elemente nutzen wir, um ein Eingabefeld zu erstellen. Um genau zu definieren welchen Wert wir in das jeweilige Eingabefeld eingeben, legen wir die Eigenschaften des Elementes fest. Als Beispiel `<input name='einwohnerzahl' type='text'` hierbei steht das Eingabefeld für die Einwohnerzahl und soll Text enthalten.
+Der Submit-Button sorgt für das Abschicken des Formulars: `<input type='submit' name='speichern' value='Speichern'>`
+
+Um die eingegebenen Daten nun in php zu verarbeiten nutzen wir eine neue Funktion der Programmiersprache: [[QUIZZ#$ _POST und $ _GET|$_POST]]
+
+## $\_POST und $\_GET
