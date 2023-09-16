@@ -36,7 +36,7 @@ Wenn wir die Verbindung wieder schließen wollen, rufen wir die Funktion `mysqli
 ```php
 //SELECT FROM
 $datensatz = mysqli_query($connection,"SELECT stadtname FROM stadt WHERE
-										stadt_id='1';");
+			stadt_id='1';");
 $zeile = mysqli_fetch_array($datensatz);
 echo $zeile[0];
 ```
